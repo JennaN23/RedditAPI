@@ -6,9 +6,9 @@ import java.util.List;
 public class Reddit {
     private String modhash;
     private int dist;
-    private List<Reddit> children;
+    private List<RedditResponse> children;
 
-    public Reddit(String modhash, int dist, List<Reddit> children) {
+    public Reddit(String modhash, int dist, List<RedditResponse> children) {
 
         this.modhash = modhash;
         this.dist = dist;
@@ -31,11 +31,11 @@ public class Reddit {
         this.dist = dist;
     }
 
-    public List<Reddit> getChildren() {
+    public List<RedditResponse> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Reddit> children) {
+    public void setChildren(List<RedditResponse> children) {
         this.children = children;
     }
 

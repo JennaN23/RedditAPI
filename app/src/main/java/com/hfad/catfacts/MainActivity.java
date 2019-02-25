@@ -1,8 +1,14 @@
 package com.hfad.catfacts;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
+
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -19,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         getReddit();
     }
 
@@ -30,22 +37,18 @@ public class MainActivity extends AppCompatActivity {
 
         RedditService service = retrofit.create(RedditService.class);
 
-        Call<RedditResponse> redditResponseCall = service.searchReddit("TIL");
+        Call<RedditResponse> redditResponseCall = service.searchReddit("TIL", 1);
 
         redditResponseCall.enqueue(new Callback<RedditResponse>() {
             @Override
-            public void onResponse(Call<RedditResponse> call, Response<RedditResponse> response) {
-                List<Reddit> reddit = response.body().getData();
+            public void onResponse(@NonNull Call<RedditResponse> call, @NonNull Response<RedditResponse> response) {
+                Reddit reddit = response.body().getData();
                 Log.d("ENQUEUE", "onResponse: " + reddit.toString());
             }
 
             @Override
-            public void onFailure(Call<RedditResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<RedditResponse> call, @NonNull Throwable t) {
                 Log.d("ENQUEUE", "onResponse: " + t.getMessage());
-
-
-
-
             }
         });
 

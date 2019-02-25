@@ -4,11 +4,10 @@ import java.util.List;
 
 public class RedditResponse {
     private String kind;
-    private List<Reddit> data;
+    private Reddit data;
 
-    public RedditResponse(String kind, List<Reddit> data) {
-        this.kind = kind;
-        this.data = data;
+    public RedditResponse(){
+
     }
 
     public String getKind() {
@@ -19,11 +18,11 @@ public class RedditResponse {
         this.kind = kind;
     }
 
-    public List<Reddit> getData() {
+    public Reddit getData() {
         return data;
     }
 
-    public void setData(List<Reddit> data) {
+    public void setData(Reddit data) {
         this.data = data;
     }
 
