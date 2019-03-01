@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         RedditService service = retrofit.create(RedditService.class);
 
-        Call<RedditResponse> redditResponseCall = service.searchReddit("TIL", 1);
+        Call<RedditResponse> redditResponseCall = service.searchReddit("game of thrones", 1);
 
         redditResponseCall.enqueue(new Callback<RedditResponse>() {
             @Override

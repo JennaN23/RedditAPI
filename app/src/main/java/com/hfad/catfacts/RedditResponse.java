@@ -1,10 +1,9 @@
 package com.hfad.catfacts;
 
-import java.util.List;
-
 public class RedditResponse {
     private String kind;
     private Reddit data;
+
 
     public RedditResponse(){
 
@@ -19,12 +18,17 @@ public class RedditResponse {
     }
 
     public Reddit getData() {
+
         return data;
     }
 
     public void setData(Reddit data) {
         this.data = data;
     }
+
+
+
+
 
     @Override
     public String toString() {

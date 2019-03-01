@@ -7,12 +7,14 @@ public class Reddit {
     private String modhash;
     private int dist;
     private List<RedditResponse> children;
+    private String title;
 
-    public Reddit(String modhash, int dist, List<RedditResponse> children) {
+    public Reddit(String modhash, int dist, List<RedditResponse> children, String title) {
 
         this.modhash = modhash;
         this.dist = dist;
         this.children = children;
+        this.title = title;
     }
 
     public String getModhash() {
@@ -39,12 +41,21 @@ public class Reddit {
         this.children = children;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public String toString() {
         return "Reddit{" +
                 "modhash='" + modhash + '\'' +
                 ", dist=" + dist +
                 ", children=" + children +
+                ", title='" + title + '\'' +
                 '}';
     }
 }
