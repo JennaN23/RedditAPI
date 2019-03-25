@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 import com.google.gson.Gson;
@@ -20,13 +24,42 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView textViewTitle;
+    private EditText editTextKeyword;
+    private Button buttonSearch;
+    private Button buttonNext;
+    private int x = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        wireWidgets();
 
-        getReddit();
+       buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getReddit();
+            }
+        });
+
+       buttonNext.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               x+= 1;
+               getReddit();
+           }
+       });
+
+    }
+
+
+    private void wireWidgets() {
+        textViewTitle = findViewById(R.id.textview_activitymain_title);
+        editTextKeyword = findViewById(R.id.editText_mainactivity_keyword);
+        buttonSearch = findViewById(R.id.button_main_search);
+        buttonNext = findViewById(R.id.button_main_next);
     }
 
     private void getReddit() {
@@ -37,12 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
         RedditService service = retrofit.create(RedditService.class);
 
-        Call<RedditResponse> redditResponseCall = service.searchReddit("game of thrones", 1);
+        String keyword = editTextKeyword.getText().toString();
+        Call<RedditResponse> redditResponseCall = service.searchReddit(keyword, 1);
 
         redditResponseCall.enqueue(new Callback<RedditResponse>() {
             @Override
             public void onResponse(@NonNull Call<RedditResponse> call, @NonNull Response<RedditResponse> response) {
                 Reddit reddit = response.body().getData();
+                List<RedditResponse> redditResponses = reddit.getChildren();
+                String title = redditResponses.get(x).toString();
+                int startIndex = title.indexOf("title");
+                int endIndex = title.indexOf("'}}");
+                textViewTitle.setText(title.substring(startIndex+7, endIndex));
                 Log.d("ENQUEUE", "onResponse: " + reddit.toString());
             }
 
@@ -51,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("ENQUEUE", "onResponse: " + t.getMessage());
             }
         });
+
+
+
+
 
     }
 }
