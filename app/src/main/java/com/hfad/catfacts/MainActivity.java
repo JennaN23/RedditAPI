@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.gson.Gson;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textViewTitle;
     private EditText editTextKeyword;
+    private String keyword;
     private Button buttonSearch;
     private Button buttonNext;
     private int x = 0;
@@ -40,7 +42,14 @@ public class MainActivity extends AppCompatActivity {
        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getReddit();
+                keyword = editTextKeyword.getText().toString();
+                x = 0;
+                if(keyword.equals(""))
+                {
+                    Toast.makeText(MainActivity.this, "Please enter a keyword", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                getReddit();}
             }
         });
 
@@ -70,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         RedditService service = retrofit.create(RedditService.class);
 
-        String keyword = editTextKeyword.getText().toString();
+        keyword = editTextKeyword.getText().toString();
         Call<RedditResponse> redditResponseCall = service.searchReddit(keyword, 1);
 
         redditResponseCall.enqueue(new Callback<RedditResponse>() {
